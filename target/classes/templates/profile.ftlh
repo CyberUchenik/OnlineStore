@@ -4,9 +4,18 @@
     <hr>
     <br>
     <div style="text-align: center">
-        <img src="/static/images/avatar.png"
-             style="border:2px solid black; border-radius: 20px" height="120">
+        <#if user.avatar??>
+            <img src="/images/${user.avatar.id}" alt="Аватар" style="border:2px solid black; border-radius: 20px" height="120">
+        <#else>
+            <img src="/static/images/avatar.png" alt="Аватар" style="border:2px solid black; border-radius: 20px" height="225">
+        </#if>
         <br>
+        <form action="/user/change-avatar" method="post" enctype="multipart/form-data">
+            <input type="file" name="avatar" required>
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <button type="submit">Сохранить новый аватар</button>
+        </form>
+
         <br>
         <h2>${user.name}</h2>
         <br>

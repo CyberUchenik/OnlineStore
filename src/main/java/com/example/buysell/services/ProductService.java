@@ -5,6 +5,7 @@ import com.example.buysell.models.Product;
 import com.example.buysell.models.User;
 import com.example.buysell.repositories.ProductRepository;
 import com.example.buysell.repositories.UserRepository;
+import com.example.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,16 +34,16 @@ public class ProductService {
         Image image2;
         Image image3;
         if (file1.getSize() != 0) {
-            image1 = toImageEntity(file1);
+            image1 = ImageUtils.toImageEntity(file1);
             image1.setPreviewImage(true);
             product.addImageToProduct(image1);
         }
         if (file2.getSize() != 0) {
-            image2 = toImageEntity(file2);
+            image2 = ImageUtils.toImageEntity(file2);
             product.addImageToProduct(image2);
         }
         if (file3.getSize() != 0) {
-            image3 = toImageEntity(file3);
+            image3 = ImageUtils.toImageEntity(file3);
             product.addImageToProduct(image3);
         }
         log.info("Saving new Product. Title: {}; Author email: {}", product.getTitle(), product.getUser().getEmail());
@@ -56,15 +57,7 @@ public class ProductService {
         return userRepository.findByEmail(principal.getName());
     }
 
-    private Image toImageEntity(MultipartFile file) throws IOException {
-        Image image = new Image();
-        image.setName(file.getName());
-        image.setOriginalFileName(file.getOriginalFilename());
-        image.setContentType(file.getContentType());
-        image.setSize(file.getSize());
-        image.setBytes(file.getBytes());
-        return image;
-    }
+
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);

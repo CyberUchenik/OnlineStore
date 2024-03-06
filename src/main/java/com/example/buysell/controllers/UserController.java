@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -53,4 +56,10 @@ public class UserController {
         model.addAttribute("products", user.getProducts());
         return "user-info";
     }
+    @PostMapping("/user/change-avatar")
+    public String changeUserAvatar(@RequestParam("avatar") MultipartFile avatarFile, Principal principal) {
+        userService.changeUserAvatar(avatarFile, principal);
+        return "redirect:/profile";
+    }
+
 }
