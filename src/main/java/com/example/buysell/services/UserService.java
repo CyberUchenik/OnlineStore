@@ -1,13 +1,19 @@
 package com.example.buysell.services;
 
+import com.example.buysell.models.Image;
 import com.example.buysell.models.User;
 import com.example.buysell.models.enums.Role;
+import com.example.buysell.repositories.ImageRepository;
 import com.example.buysell.repositories.UserRepository;
+import com.example.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +27,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ImageRepository imageRepository;
 
     public boolean createUser(User user) {
         String email = user.getEmail();
@@ -51,6 +58,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values())
                 .map(Role::name)
@@ -64,8 +72,34 @@ public class UserService {
         userRepository.save(user);
     }
 
+
     public User getUserByPrincipal(Principal principal) {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
+    }
+
+    @Transactional()
+    public void changeUserAvatar(MultipartFile avatarFile, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        try {
+            if(user != null && !avatarFile.isEmpty()){
+                Long oldAvatarId = null;
+                //Проверяем, есть ли у пользователя текущий аватар
+                Image oldAvatar = user.getAvatar();
+                if(oldAvatar!=null){
+                    imageRepository.delete(oldAvatar);
+    //                oldAvatarId = oldAvatar.getId();
+    //                user.setAvatar(null);
+    //                userRepository.save(user);
+                }
+                //Создаем новый объект Image с данными нового аватара
+                Image newAvatar = ImageUtils.toImageEntity(avatarFile);
+                user.setAvatar(newAvatar);
+                userRepository.save(user);
+            }
+        } catch (IOException e) {
+            log.info("Что то пошло не так при загрузке файла, кратко: IOException словил братишка");
+            throw new RuntimeException(e);
+        }
     }
 }

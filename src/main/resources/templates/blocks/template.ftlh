@@ -23,16 +23,25 @@
             <#if user.email??>
                 <div class="dropdown text-end">
                     <a href="/profile">
-                        <img src="/static/images/avatar.png" alt="mdo"
-                             width="32" height="32" class="rounded-circle">
+                        <#-- Проверяем, есть ли у пользователя аватар, и выводим его -->
+                        <#if user.avatar?? && user.avatar.id??>
+                            <img src="/images/${user.avatar.id}" alt="Аватар пользователя"
+                                 width="32" height="32" class="rounded-circle">
+                        <#else>
+                            <!-- Если у пользователя нет аватара, выводим стандартное изображение -->
+                            <img src="/static/images/avatar.png" alt="Аватар пользователя"
+                                 width="32" height="32" class="rounded-circle">
+                        </#if>
                     </a>
                 </div>
             <#else>
+                <!-- Кнопка для входа, если пользователь не вошёл в систему -->
                 <button class="btn btn-light my-2 my-sm-0" type="button"
                         onclick="window.location.href = '/login'">
                     Войти
                 </button>
             </#if>
+
         </div>
     </nav>
     <div class="container mt-4">
