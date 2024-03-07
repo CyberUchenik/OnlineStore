@@ -28,6 +28,29 @@ public class ProductController {
         return "products";
     }
 
+    @GetMapping("/product/edit/{id}")
+    public String editProductForm(@PathVariable Long id,Model model,Principal principal){
+        Product product = productService.getProductById(id);
+        if (product != null && product.getUser().getEmail().equals(principal.getName())){
+            model.addAttribute("product",product);
+            model.addAttribute("user", productService.getUserByPrincipal(principal));
+            Integer price = product.getPrice();
+            model.addAttribute("price", price != null ? price.toString() : "");
+            return "product-edit";
+        } return "redirect:/my/products";
+    }
+
+    @PostMapping("/product/edit")
+    public String updateProduct(@RequestParam Long id,
+                                @RequestParam(value = "imageIds",required = false) Long[] imageIds,
+                                @RequestParam("file1") MultipartFile file1,
+                                @RequestParam("file2") MultipartFile file2,
+                                @RequestParam("file3") MultipartFile file3,
+                                Product productDetails, Principal principal) throws IOException{
+        productService.updateProduct(id, productDetails, file1,file2,file3,imageIds,principal);
+        return "redirect:/my/products";
+    }
+
     @GetMapping("/product/{id}")
     public String productInfo(@PathVariable Long id, Model model, Principal principal) {
         Product product = productService.getProductById(id);
@@ -44,6 +67,7 @@ public class ProductController {
         productService.saveProduct(principal, product, file1, file2, file3);
         return "redirect:/my/products";
     }
+
 
     @PostMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable long id){
