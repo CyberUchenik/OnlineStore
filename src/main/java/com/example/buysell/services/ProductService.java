@@ -3,16 +3,20 @@ package com.example.buysell.services;
 import com.example.buysell.models.Image;
 import com.example.buysell.models.Product;
 import com.example.buysell.models.User;
+import com.example.buysell.repositories.ImageRepository;
 import com.example.buysell.repositories.ProductRepository;
 import com.example.buysell.repositories.UserRepository;
 import com.example.buysell.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -21,6 +25,7 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final ImageRepository imageRepository;
 
     public List<Product> listProducts(String title) {
         if (title != null) return productRepository.findByTitle(title);
@@ -65,4 +70,45 @@ public class ProductService {
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElse(null);
     }
+
+    @Transactional
+    public void updateProduct(Long productId, Product productDetails, MultipartFile file1, MultipartFile file2, MultipartFile file3, Long[] imageIds, Principal principal) throws IOException {
+        Product product = productRepository.findById(productId).orElse(null);
+        if (product == null || !product.getUser().getEmail().equals(principal.getName())) {
+            throw new IllegalStateException("Product not found or not owned by the principal");
+        }
+
+        product.setTitle(productDetails.getTitle());
+        product.setDescription(productDetails.getDescription());
+        product.setPrice(productDetails.getPrice());
+        product.setCity(productDetails.getCity());
+
+        // Обновляем изображения
+        List<MultipartFile> files = Arrays.asList(file1, file2, file3);
+        for (int i = 0; i < files.size(); i++) {
+            MultipartFile file = files.get(i);
+            if (!file.isEmpty()) {
+                Image image;
+                if (imageIds != null && i < imageIds.length && imageIds[i] != null) {
+                    // Замена существующего изображения
+                    image = imageRepository.findById(imageIds[i]).orElse(new Image());
+                    image.setProduct(product);
+                } else {
+                    // Добавление нового изображения
+                    image = new Image();
+                    image.setProduct(product);
+                    product.addImageToProduct(image);
+                }
+                image.setOriginalFileName(file.getOriginalFilename());
+                image.setContentType(file.getContentType());
+                image.setSize(file.getSize());
+                image.setBytes(file.getBytes());
+                imageRepository.save(image);
+            }
+        }
+
+        productRepository.save(product);
+    }
+
+
 }

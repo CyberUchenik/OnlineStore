@@ -72,6 +72,7 @@
                                 Удалить
                             </button>
                         </form>
+                        <a href="/product/edit/${product.id}" class="btn btn-primary m-3">Изменить</a>
                     </div>
                     <img src="/images/${product.previewImageId}"
                          class="card-img-top">
