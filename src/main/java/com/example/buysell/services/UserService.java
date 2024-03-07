@@ -5,20 +5,18 @@ import com.example.buysell.models.User;
 import com.example.buysell.models.enums.Role;
 import com.example.buysell.repositories.ImageRepository;
 import com.example.buysell.repositories.UserRepository;
-import com.example.utils.ImageUtils;
+import com.example.buysell.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -100,6 +98,23 @@ public class UserService {
         } catch (IOException e) {
             log.info("Что то пошло не так при загрузке файла, кратко: IOException словил братишка");
             throw new RuntimeException(e);
+        }
+    }
+
+    public void updateUserRoles(Long userId, String[] roles) {
+        User user = userRepository.findById(userId).orElse(null);
+        if(user!=null){
+            Set<Role> newRoles = (roles!=null)? Arrays.stream(roles)
+                    .map(Role::valueOf)
+                    .collect(Collectors.toSet()) : Collections.emptySet();
+
+            user.getRoles().clear();
+            user.getRoles().addAll(newRoles);
+            userRepository.save(user);
+        }else {
+            log.info("Пользователь с ID " + userId + "не найден");
+            throw new EntityNotFoundException("Пользователь с ID " + userId + "не найден");
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.utils;
+package com.example.buysell.utils;
 
 import com.example.buysell.models.Image;
 import org.springframework.web.multipart.MultipartFile;
