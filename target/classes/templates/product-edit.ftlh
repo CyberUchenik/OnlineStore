@@ -9,7 +9,7 @@
         </div>
         <div class="form-group">
             <label for="price">Цена товара</label>
-            <input type="number" required class="form-control" id="price" name="price" value="${product.price}">
+            <input type="number" required class="form-control" id="price" name="price" value="${price}">
         </div>
         <div class="form-group">
             <label for="description">Описание товара</label>

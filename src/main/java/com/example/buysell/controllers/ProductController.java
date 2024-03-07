@@ -34,13 +34,15 @@ public class ProductController {
         if (product != null && product.getUser().getEmail().equals(principal.getName())){
             model.addAttribute("product",product);
             model.addAttribute("user", productService.getUserByPrincipal(principal));
+            Integer price = product.getPrice();
+            model.addAttribute("price", price != null ? price.toString() : "");
             return "product-edit";
         } return "redirect:/my/products";
     }
 
     @PostMapping("/product/edit")
     public String updateProduct(@RequestParam Long id,
-                                @RequestParam("imageIds") Long[] imageIds,
+                                @RequestParam(value = "imageIds",required = false) Long[] imageIds,
                                 @RequestParam("file1") MultipartFile file1,
                                 @RequestParam("file2") MultipartFile file2,
                                 @RequestParam("file3") MultipartFile file3,
