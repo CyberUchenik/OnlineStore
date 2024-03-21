@@ -27,10 +27,21 @@ public class ProductService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
 
-    public List<Product> listProducts(String title) {
-        if (title != null) return productRepository.findByTitle(title);
+    public List<Product> listProducts(String title, String city) {
+        if (city != null && !city.isEmpty()) {
+            if (title != null && !title.isEmpty()) {
+                // Если заданы и заголовок, и город
+                return productRepository.findByTitleAndCity(title, city);
+            }
+            // Если задан только город
+            return productRepository.findByCity(city);
+        } else if (title != null && !title.isEmpty()) {
+            // Если задан только заголовок
+            return productRepository.findByTitle(title);
+        }
         return productRepository.findAll();
     }
+
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         product.setUser(getUserByPrincipal(principal));

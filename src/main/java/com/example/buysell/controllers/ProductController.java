@@ -21,12 +21,16 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/")
-    public String products(@RequestParam(name = "searchWord", required = false) String title, Principal principal, Model model) {
-        model.addAttribute("products", productService.listProducts(title));
+    public String products(@RequestParam(name = "searchWord", required = false) String title,
+                           @RequestParam(name = "searchCity", required = false) String city,
+                           Principal principal, Model model) {
+        model.addAttribute("products", productService.listProducts(title, city));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("searchWord", title);
+        model.addAttribute("searchCity", city);
         return "products";
     }
+
 
     @GetMapping("/product/edit/{id}")
     public String editProductForm(@PathVariable Long id,Model model,Principal principal){
