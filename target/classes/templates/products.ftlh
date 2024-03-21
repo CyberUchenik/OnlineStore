@@ -5,12 +5,13 @@
         <div class="form-row">
             <div class="form-group col-md-2">
                 <label for="searchCity">Город</label>
-                <select id="searchCity" class="form-control">
+                <select id="searchCity" name="searchCity" class="form-control">
                     <option value="">Город не выбран</option>
                     <option value="Астана">Астана</option>
                     <option value="Оскемен">Оскемен</option>
                     <option value="Актобе">Актобе</option>
                 </select>
+
             </div>
             <div class="form-group col-md-10">
                 <label for="searchWord">Поиск по объявлениям</label>
@@ -22,23 +23,23 @@
     </form>
     <hr>
     <div class="card-columns">
-        <#list products as product>
-            <a href="/product/${product.id}" class="product-link">
-                <div class="card text-white bg-dark my-3 product">
-
-                    <img src="/images/${product.previewImageId}"
-                         class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">${product.title}</h5>
-                        <p class="card-text">${product.price}  ₸</p>
-                    </div>
-                    <div class="card-footer">
-                        ${product.city}
-                    </div>
-                </div>
-            </a>
+        <#if products?size == 0>
+            <h2 style="text-align: center">В городе "${searchCity}" продуктов не найдено.</h2>
         <#else>
-            <h1 style="text-align: center">Не найдено</h1>
-        </#list>
+            <#list products as product>
+                <a href="/product/${product.id}" class="product-link">
+                    <div class="card text-white bg-dark my-3 product">
+                        <img src="/images/${product.previewImageId}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.title}</h5>
+                            <p class="card-text">${product.price} ₸</p>
+                        </div>
+                        <div class="card-footer">
+                            ${product.city}
+                        </div>
+                    </div>
+                </a>
+            </#list>
+        </#if>
     </div>
 </@t.template>
