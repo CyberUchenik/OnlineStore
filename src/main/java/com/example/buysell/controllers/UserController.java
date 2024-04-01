@@ -57,7 +57,7 @@ public class UserController {
         return "user-info";
     }
     @PostMapping("/user/change-avatar")
-    public String changeUserAvatar(@RequestParam("avatar") MultipartFile avatarFile, Principal principal) {
+    public String changeUserAvatar(@RequestParam("avatar") MultipartFile avatarFile, Principal principal) throws IOException {
         userService.changeUserAvatar(avatarFile, principal);
         return "redirect:/profile";
     }
