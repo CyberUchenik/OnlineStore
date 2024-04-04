@@ -18,6 +18,7 @@ public class Product {
     private String description;
     private Integer price;
     private String city;
+    private String catalog;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
     mappedBy = "product")
     private List<Image> images = new ArrayList<>();

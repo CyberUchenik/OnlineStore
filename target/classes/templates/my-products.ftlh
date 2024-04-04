@@ -35,6 +35,16 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="catalog">Каталог</label>
+                <select id="catalog" name="catalog" class="form-control" required>
+                    <option value="">Выберите каталог</option>
+                    <option value="Электроника">Электроника</option>
+                    <option value="Для дома">Для дома</option>
+                    <option value="Одежда">Одежда</option>
+                    //TODO нужно добавить остальные каталоги
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="description">Описание товара</label>
                 <textarea required class="form-control" id="description" name="description"></textarea>
             </div>

@@ -9,6 +9,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByTitle(String title);
     List<Product> findByCity(String city);
     List<Product> findByTitleAndCity(String title, String city);
-
+    List<Product> findByCatalog(String catalog);
+    List<Product> findByCityAndCatalog(String city, String catalog);
 
 }
