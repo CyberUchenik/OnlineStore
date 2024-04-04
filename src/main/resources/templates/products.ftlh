@@ -11,7 +11,16 @@
                     <option value="Оскемен">Оскемен</option>
                     <option value="Актобе">Актобе</option>
                 </select>
-
+            </div>
+            <div class="form-group">
+                <label for="catalog">Каталог</label>
+                <select id="catalog" name="catalog" class="form-control">
+                    <option value="">Все категории</option>
+                    <option value="Электроника">Электроника</option>
+                    <option value="Для дома">Для дома</option>
+                    <option value="Одежда">Одежда</option>
+                    <!-- Добавьте другие категории по необходимости -->
+                </select>
             </div>
             <div class="form-group col-md-10">
                 <label for="searchWord">Поиск по объявлениям</label>
@@ -24,7 +33,7 @@
     <hr>
     <div class="card-columns">
         <#if products?size == 0>
-            <h2 style="text-align: center">В городе "${searchCity}" продуктов не найдено.</h2>
+            <h2 style="text-align: center">По вашему запросу ничего не найдено</h2>
         <#else>
             <#list products as product>
                 <a href="/product/${product.id}" class="product-link">
