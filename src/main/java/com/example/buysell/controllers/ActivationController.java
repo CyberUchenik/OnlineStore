@@ -19,14 +19,17 @@ public class ActivationController {
 
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
+        System.out.println("Activating user with code: " + code); // Для отладки
         boolean isActivated = userService.activateUser(code);
 
         if (isActivated) {
-            model.addAttribute("message", "User successfully activated.");
+            System.out.println("Activation successful."); // Для отладки
+            return "activation-success";
         } else {
+            System.out.println("Activation failed."); // Для отладки
             model.addAttribute("message", "Activation code is not found or it's already activated!");
+            return "redirect:/";
         }
-
-        return "activation"; // Возвращает имя представления (например, страницу HTML с сообщением об активации)
     }
+
 }

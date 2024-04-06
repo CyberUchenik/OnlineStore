@@ -20,7 +20,7 @@
             <a href="/">
                 <span class="navbar-brand mb-0 h1">BUYSELL</span>
             </a>
-            <#if user.email??>
+            <#if user?? && user.email??> <!-- Проверяем, существует ли объект user и имеет ли он email -->
                 <div class="dropdown text-end">
                     <a href="/profile">
                         <#-- Проверяем, есть ли у пользователя аватар, и выводим его -->
@@ -35,17 +35,16 @@
                     </a>
                 </div>
             <#else>
-                <!-- Кнопка для входа, если пользователь не вошёл в систему -->
+                <!-- Если объект user отсутствует или не имеет email, показываем кнопку для входа -->
                 <button class="btn btn-light my-2 my-sm-0" type="button"
                         onclick="window.location.href = '/login'">
                     Войти
                 </button>
             </#if>
-
         </div>
     </nav>
     <div class="container mt-4">
-        <#nested/>
+        <#nested/> <!-- Место для вставки содержимого дочерних шаблонов -->
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

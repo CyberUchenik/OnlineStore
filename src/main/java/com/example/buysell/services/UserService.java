@@ -28,7 +28,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final ImageRepository imageRepository;
     private final EmailService emailService; // Добавлено поле для EmailService
-
+@Transactional
     public boolean createUser(User user) {
         String email = user.getEmail();
         if (userRepository.findByEmail(email) != null) {
@@ -40,7 +40,9 @@ public class UserService {
         user.getRoles().add(Role.ROLE_USER);
         log.info("Saving new User with email: {}", email);
         userRepository.save(user);
+    log.info("Saving new User with email: {} and activation code: {}", email, user.getActivationCode());
 
+    userRepository.save(user);
         // Отправка активационного кода на email пользователя
         String message = String.format(
                 "Hello, %s! \n" +
