@@ -61,5 +61,53 @@
             userService.changeUserAvatar(avatarFile, principal);
             return "redirect:/profile";
         }
+        @GetMapping("/forgot-password")
+        public String displayForgotPasswordPage() {
+            System.out.println("Displaying forgot password page");
+            return "forgot-password";
+        }
 
+        @PostMapping("/forgot-password")
+        public String processForgotPasswordForm(@RequestParam("email") String email, Model model) {
+            System.out.println("Processing forgot password for email: " + email);
+            userService.sendPasswordResetToken(email);
+            System.out.println("Forgot password processed");
+            model.addAttribute("message", "Если адрес электронной почты существует в нашей системе, на него будет отправлена ссылка для сброса пароля.");
+            return "forgot-password-confirmation";
+        }
+
+
+        // Отображение страницы для установки нового пароля
+        @GetMapping("/reset-password")
+        public String displayResetPasswordPage(@RequestParam("token") String token, Model model, Principal principal) {
+            boolean isTokenValid = userService.validatePasswordResetToken(token);
+            if (!isTokenValid) {
+                model.addAttribute("error", "Токен для сброса пароля недействителен или истек его срок.");
+                return "reset-password-error"; // Отображение страницы с ошибкой, если токен недействителен
+            }
+            model.addAttribute("token", token);
+            model.addAttribute("user", userService.getUserByPrincipal(principal));
+            return "reset-password"; // Имя вашего файла .ftlh для установки нового пароля
+        }
+
+        // Обработка установки нового пароля
+        @PostMapping("/reset-password")
+        public String processResetPasswordForm(
+                @RequestParam("token") String token,
+                @RequestParam("password") String password,
+                @RequestParam("confirmPassword") String confirmPassword,
+                Model model)
+        {
+            if (!password.equals(confirmPassword)) {
+                model.addAttribute("error", "Пароли не совпадают.");
+                return "reset-password";
+            }
+            boolean isPasswordChanged = userService.changeUserPassword(token, password);
+            if (!isPasswordChanged) {
+                model.addAttribute("error", "Произошла ошибка при смене пароля.");
+                return "reset-password";
+            }
+
+            return "reset-password-success"; // Отображение страницы с подтверждением успешной смены пароля
+        }
     }

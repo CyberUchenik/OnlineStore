@@ -1,9 +1,11 @@
 package com.example.buysell.services;
 
 import com.example.buysell.models.Image;
+import com.example.buysell.models.PasswordResetToken;
 import com.example.buysell.models.User;
 import com.example.buysell.models.enums.Role;
 import com.example.buysell.repositories.ImageRepository;
+import com.example.buysell.repositories.PasswordResetTokenRepository;
 import com.example.buysell.repositories.UserRepository;
 import com.example.buysell.utils.ImageUtils;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +27,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordResetTokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final ImageRepository imageRepository;
-    private final EmailService emailService; // Добавлено поле для EmailService
-@Transactional
+    private final EmailService emailService;
+
+    @Transactional
     public boolean createUser(User user) {
         String email = user.getEmail();
         if (userRepository.findByEmail(email) != null) {
@@ -40,9 +44,9 @@ public class UserService {
         user.getRoles().add(Role.ROLE_USER);
         log.info("Saving new User with email: {}", email);
         userRepository.save(user);
-    log.info("Saving new User with email: {} and activation code: {}", email, user.getActivationCode());
+        log.info("Saving new User with email: {} and activation code: {}", email, user.getActivationCode());
 
-    userRepository.save(user);
+        userRepository.save(user);
         // Отправка активационного кода на email пользователя
         String message = String.format(
                 "Hello, %s! \n" +
@@ -55,6 +59,45 @@ public class UserService {
 
         return true;
     }
+    public void createPasswordResetTokenForUser(final User user, final String token) {
+        final PasswordResetToken myToken = new PasswordResetToken();
+        myToken.setUser(user);
+        myToken.setToken(token);
+        // Установите срок действия токена здесь, если необходимо
+        tokenRepository.save(myToken);
+    }
+
+    public void sendPasswordResetToken(final String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            String token = UUID.randomUUID().toString();
+            createPasswordResetTokenForUser(user, token);
+            // Предположим, что метод sendSimpleMessage теперь является частью emailService
+            emailService.send(email, "Сброс пароля", "Чтобы сбросить пароль, перейдите по ссылке: http://localhost:8080/reset-password?token=" + token);
+
+        }
+    }
+    public boolean validatePasswordResetToken(String token) {
+        PasswordResetToken passToken = tokenRepository.findByToken(token);
+        return passToken != null;
+    }
+
+    // Метод для изменения пароля пользователя
+    @Transactional
+    public boolean changeUserPassword(String token, String newPassword) {
+        PasswordResetToken passToken = tokenRepository.findByToken(token);
+        if (passToken == null) {
+            return false;
+        }
+        User user = passToken.getUser();
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+        // После успешного изменения пароля, токен сброса должен быть удален или инвалидирован
+        tokenRepository.delete(passToken);
+        return true;
+    }
+
     public boolean activateUser(String code) {
         User user = userRepository.findByActivationCode(code);
 
