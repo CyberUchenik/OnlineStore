@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label for="phoneNumber">Номер телефона</label>
-            <input type="text" class="form-control" placeholder="+7 (999) 999-99-99" id="phoneNumber" required name="phoneNumber" pattern="^\+[1-9]\d{1,14}$">
+            <input type="text" class="form-control" placeholder="+77004446699" id="phoneNumber" required name="phoneNumber" pattern="^\+[1-9]\d{1,14}$">
         </div>
         <div class="form-group">
             <label for="password">Пароль</label>

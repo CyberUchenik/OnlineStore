@@ -22,9 +22,5 @@
     </form>
     <hr>
     <h2><a href="/registration">Регистрация</a></h2>
-<<<<<<< HEAD
     <h2><a href="/forgot-password">Забыл пароль?</a></h2>
 </@t.template>
-=======
-</@t.template>
->>>>>>> a91969f967a174362f9e966d398285aa6a2dedf0
