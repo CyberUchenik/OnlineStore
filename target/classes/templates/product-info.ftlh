@@ -39,7 +39,13 @@
     <hr>
     <p><h1 style="text-align: center">${product.title} | ${product.price}  ₸</h1></p>
     <p style="text-align: center">${product.description}</p>
+    <#if catalog??>
+        <hr>
+        <p style="text-align: center">Каталог: <b>${product.catalog}</b></p>
+    </#if>
+
     <p style="text-align: center">Номер телефона продавца: <b>${authorProduct.phoneNumber}</b></p>
+
 
     <hr>
     <p style="text-align: center">

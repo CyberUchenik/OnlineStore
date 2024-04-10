@@ -32,7 +32,48 @@
                         <option value="Оскемен">Оскемен</option>
                         <option value="Актобе">Актобе</option>
 
+<<<<<<< HEAD
                     </select>
+=======
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="catalog">Каталог</label>
+                <select id="catalog" name="catalog" class="form-control" required>
+                    <option value="">Выберите каталог</option>
+                    <option value="Электроника">Электроника</option>
+                    <option value="Для дома">Для дома</option>
+                    <option value="Одежда">Одежда</option>
+                    //TODO нужно добавить остальные каталоги
+                    <option value="Услуги">Услуги</option>
+                    <option value="Строительство и ремонт">Строительство и ремонт</option>
+                    <option value="Аренда и прокат товаров">Аренда и прокат товаров</option>
+                    <option value="Недвижимость">Недвижимость</option>
+                    <option value="Работа">Работа</option>
+                    <option value="Мода и стиль">Мода и стиль</option>
+                    <option value="Детский мир">Детский мир</option>
+                    <option value="Хобби, отдых и спорт">Хобби, отдых и спорт</option>
+                    <option value="Транспорт">Транспорт</option>
+                    <option value="Животные">Животные</option>
+                    <option value="Отдам даром">Отдам даром</option>
+                    <option value="Велосипеды">Велосипеды</option>
+                    <option value="Электроинструменты">Электроинструменты</option>
+                    <option value="Микрокредит онлайн">Микрокредит онлайн</option>
+                    <option value="Мебель">Мебель</option>
+                    <option value="Охота и рыбалка">Охота и рыбалка</option>
+                    <option value="Онлайн заем от KMF">Онлайн заем от KMF</option>
+                    <option value="Телефоны и аксессуары">Телефоны и аксессуары</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание товара</label>
+                <textarea required class="form-control" id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="custom-file">
+                    <input required type="file" name="file1" id="file1">
+                    <label class="custom-file-label" for="file1">Первая фотография к товару</label>
+>>>>>>> a91969f967a174362f9e966d398285aa6a2dedf0
                 </div>
                 <div class="form-group">
                     <label for="description">Описание товара</label>

@@ -23,8 +23,9 @@ public class ProductController {
     @GetMapping("/")
     public String products(@RequestParam(name = "searchWord", required = false) String title,
                            @RequestParam(name = "searchCity", required = false) String city,
+                           @RequestParam(name = "catalog", required = false) String catalog,
                            Principal principal, Model model) {
-        model.addAttribute("products", productService.listProducts(title, city));
+        model.addAttribute("products", productService.listProducts(title, city,catalog));
         model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("searchWord", title);
         model.addAttribute("searchCity", city);
@@ -62,6 +63,7 @@ public class ProductController {
         model.addAttribute("product", product);
         model.addAttribute("images", product.getImages());
         model.addAttribute("authorProduct", product.getUser());
+        model.addAttribute("catalog", product.getCatalog());
         return "product-info";
     }
 

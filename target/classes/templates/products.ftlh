@@ -11,6 +11,35 @@
                     <option value="Оскемен">Оскемен</option>
                     <option value="Актобе">Актобе</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="catalog">Каталог</label>
+                <select id="catalog" name="catalog" class="form-control">
+                    <option value="">Все категории</option>
+                    <option value="Электроника">Электроника</option>
+                    <option value="Для дома">Для дома</option>
+                    <option value="Одежда">Одежда</option>
+
+                    <!-- Добавьте другие категории по необходимости -->
+                    <option value="Услуги">Услуги</option>
+                    <option value="Строительство и ремонт">Строительство и ремонт</option>
+                    <option value="Аренда и прокат товаров">Аренда и прокат товаров</option>
+                    <option value="Недвижимость">Недвижимость</option>
+                    <option value="Работа">Работа</option>
+                    <option value="Мода и стиль">Мода и стиль</option>
+                    <option value="Детский мир">Детский мир</option>
+                    <option value="Хобби, отдых и спорт">Хобби, отдых и спорт</option>
+                    <option value="Транспорт">Транспорт</option>
+                    <option value="Животные">Животные</option>
+                    <option value="Отдам даром">Отдам даром</option>
+                    <option value="Велосипеды">Велосипеды</option>
+                    <option value="Электроинструменты">Электроинструменты</option>
+                    <option value="Микрокредит онлайн">Микрокредит онлайн</option>
+                    <option value="Мебель">Мебель</option>
+                    <option value="Охота и рыбалка">Охота и рыбалка</option>
+                    <option value="Онлайн заем от KMF">Онлайн заем от KMF</option>
+                    <option value="Телефоны и аксессуары">Телефоны и аксессуары</option>
+                </select>
 
             </div>
             <div class="form-group col-md-10">
@@ -24,7 +53,7 @@
     <hr>
     <div class="card-columns">
         <#if products?size == 0>
-            <h2 style="text-align: center">В городе "${searchCity}" продуктов не найдено.</h2>
+            <h2 style="text-align: center">По вашему запросу ничего не найдено</h2>
         <#else>
             <#list products as product>
                 <a href="/product/${product.id}" class="product-link">

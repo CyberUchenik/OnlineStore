@@ -32,7 +32,30 @@
                         <option value="Оскемен">Оскемен</option>
                         <option value="Актобе">Актобе</option>
 
+<<<<<<< HEAD
                     </select>
+=======
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="catalog">Каталог</label>
+                <select id="catalog" name="catalog" class="form-control" required>
+                    <option value="">Выберите каталог</option>
+                    <option value="Электроника">Электроника</option>
+                    <option value="Для дома">Для дома</option>
+                    <option value="Одежда">Одежда</option>
+                    //TODO нужно добавить остальные каталоги
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание товара</label>
+                <textarea required class="form-control" id="description" name="description"></textarea>
+            </div>
+            <div class="form-group">
+                <div class="custom-file">
+                    <input required type="file" name="file1" id="file1">
+                    <label class="custom-file-label" for="file1">Первая фотография к товару</label>
+>>>>>>> a91969f967a174362f9e966d398285aa6a2dedf0
                 </div>
                 <div class="form-group">
                     <label for="description">Описание товара</label>

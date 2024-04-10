@@ -27,7 +27,13 @@ public class ProductService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
 
-    public List<Product> listProducts(String title, String city) {
+    public List<Product> listProducts(String title, String city,String catalog) {
+        if (catalog != null && !catalog.isEmpty() && city != null && !city.isEmpty()) {
+            return productRepository.findByCityAndCatalog(city, catalog);
+        } else if (catalog != null && !catalog.isEmpty()) {
+            return productRepository.findByCatalog(catalog);
+        } else {
+            // Существующая логика фильтрации
         if (city != null && !city.isEmpty()) {
             if (title != null && !title.isEmpty()) {
                 // Если заданы и заголовок, и город
@@ -40,6 +46,7 @@ public class ProductService {
             return productRepository.findByTitle(title);
         }
         return productRepository.findAll();
+        }
     }
 
 
