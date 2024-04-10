@@ -12,7 +12,7 @@
     <artifactId>AzaTaspoAlkhan</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>com.example.buysell</name>
-    <description>Clone Avito</description>
+    <description>Byucell</description>
     <properties>
         <java.version>11</java.version>
     </properties>
