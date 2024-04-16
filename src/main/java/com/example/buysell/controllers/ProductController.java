@@ -31,8 +31,10 @@ public class ProductController {
         model.addAttribute("searchCity", city);
         return "products";
     }
-
-
+    @GetMapping("/about")
+    public String aboutUs(Model model) {
+        return "about_us_modal";
+    }
     @GetMapping("/product/edit/{id}")
     public String editProductForm(@PathVariable Long id,Model model,Principal principal){
         Product product = productService.getProductById(id);
@@ -74,13 +76,11 @@ public class ProductController {
         return "redirect:/my/products";
     }
 
-
     @PostMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable long id){
         productService.deleteProduct(id);
         return "redirect:/my/products";
     }
-
 
     @GetMapping("/my/products")
     public String userProducts(Principal principal, Model model) {
