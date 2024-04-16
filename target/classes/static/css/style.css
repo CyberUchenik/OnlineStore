@@ -7,3 +7,25 @@
     color: #000 !important;
     text-decoration: none
 }
+
+
+
+
+.header-with-border {
+    border-bottom: 1px solid #e0e0e0; /* Very light gray color */
+}
+
+.feature-icon {
+    width: 50px; /* или любой размер, который хорошо подойдет */
+    height: 50px; /* подбирайте ширину, чтобы круг был идеальным */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #007bff; /* основной цвет Bootstrap */
+    color: white;
+}
+
+.feature-icon i {
+    font-size: 20px; /* или любой размер, который будет выглядеть пропорционально */
+}
