@@ -26,6 +26,14 @@ public class User implements UserDetails {
     @Column(length = 1000)
     private String password;
 
+    public List<Product> getFavoriteProducts() {
+        return favoriteProducts;
+    }
+
+    public void setFavoriteProducts(List<Product> favoriteProducts) {
+        this.favoriteProducts = favoriteProducts;
+    }
+
     public boolean isVerified() {
         return isVerified;
     }
@@ -52,6 +60,8 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> favoriteProducts = new ArrayList<>();
+
+
     public void addProductToUser(Product product) {
         product.setUser(this);
         products.add(product);

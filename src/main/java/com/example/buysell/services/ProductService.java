@@ -48,7 +48,23 @@ public class ProductService {
         return productRepository.findAll();
         }
     }
+    public List<Product> getFavorites(Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        return user.getFavoriteProducts(); // Возвращаем список избранных товаров
+    }
+    public void addProductToFavorites(Long productId, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        user.getFavoriteProducts().add(product);
+        userRepository.save(user);
+    }
 
+    public void removeProductFromFavorites(Long productId, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        user.getFavoriteProducts().remove(product);
+        userRepository.save(user);
+    }
 
     public void saveProduct(Principal principal, Product product, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
         product.setUser(getUserByPrincipal(principal));
@@ -78,8 +94,6 @@ public class ProductService {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());
     }
-
-
 
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
