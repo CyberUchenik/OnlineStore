@@ -1,24 +1,24 @@
-package com.example.buysell.services;
+    package com.example.buysell.services;
 
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
+    import org.springframework.mail.SimpleMailMessage;
+    import org.springframework.mail.javamail.JavaMailSender;
+    import org.springframework.stereotype.Service;
 
-@Service
-public class EmailService{
+    @Service
+    public class EmailService{
 
-    private final JavaMailSender mailSender;
+        private final JavaMailSender mailSender;
 
-    public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+        public EmailService(JavaMailSender mailSender) {
+            this.mailSender = mailSender;
+        }
+
+        public void send(String to, String subject, String text) {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("azamatkoshenov6@gmail.com");
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(text);
+            mailSender.send(message);
+        }
     }
-
-    public void send(String to, String subject, String text) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("azamatkoshenov6@gmail.com");
-        message.setTo(to);
-        message.setSubject(subject);
-        message.setText(text);
-        mailSender.send(message);
-    }
-}

@@ -26,6 +26,14 @@ public class User implements UserDetails {
     @Column(length = 1000)
     private String password;
 
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
     @Column(name = "is_verified", nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean isVerified = false;
 
@@ -39,6 +47,11 @@ public class User implements UserDetails {
     mappedBy = "user")
     private List<Product> products = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_favorites",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> favoriteProducts = new ArrayList<>();
     public void addProductToUser(Product product) {
         product.setUser(this);
         products.add(product);

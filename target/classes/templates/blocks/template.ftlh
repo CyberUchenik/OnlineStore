@@ -11,38 +11,75 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
               integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
               crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 
         <title>BUYSELL</title>
+        <style>
+            .logo {
+                font-size: 1.5em; /* Увеличивает размер шрифта */
+                font-weight: bold; /* Делает шрифт жирным */
+                color: #8ad790; /* Меняет цвет текста на черный */
+            }
+
+            .custom-btn-size {
+                font-size: 1.00rem; /* Увеличение размера шрифта, например, до 1.25rem */
+            }
+
+            .button-container {
+                display: flex; /* Использование flexbox для выравнивания элементов */
+                align-items: center; /* Центрирование элементов по вертикали */
+                justify-content: flex-end; /* Выравнивание элементов по правому краю */
+            }
+
+            /* Увеличенный отступ между элементами */
+            .button-container > a,
+            .button-container > button {
+                margin-left: 20px; /* Увеличение отступа слева до 20px */
+            }
+        </style>
     </head>
     <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a href="/">
-                <span class="navbar-brand mb-0 h1">BUYSELL</span>
-            </a>
-            <button class="btn btn-light mx-2" type="button" data-toggle="modal" data-target="#aboutUsModal">
-                О нас
-            </button>
-            <#if user.email??>
-                <div class="dropdown text-end">
-                    <a href="/profile">
-                        <#if user.avatar?? && user.avatar.id??>
-                            <img src="/images/${user.avatar.id}" alt="User Avatar"
-                                 width="32" height="32" class="rounded-circle">
-                        <#else>
-                            <img src="/static/images/avatar.png" alt="User Avatar"
-                                 width="32" height="32" class="rounded-circle">
-                        </#if>
+    <header class="p-3 bg-dark text-white fixed-top">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <!-- Логотип и ссылки в одном flex-контейнере -->
+                <div class="d-flex align-items-center">
+                    <a href="/" class="me-3 custom-btn-size" style="font-weight: 900; font-size: 24px;">
+                        <span style="color: white; font-weight: 900;">Buy</span><span style="color: #229808; font-weight: 900;">Sell</span>
                     </a>
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="navbar-nav">
+                            <a class="nav-link active text-white custom-btn-size" aria-current="page" href="#" data-toggle="modal" data-target="#aboutUsModal">О нас</a>
+                            <a class="nav-link text-white custom-btn-size" href="#">Избранные</a>
+                        </div>
+                    </nav>
                 </div>
-            <#else>
-                <button class="btn btn-light my-2 my-sm-0" type="button"
-                        onclick="window.location.href = '/login'">
-                    Войти
-                </button>
-            </#if>
+                <!-- Измененный контейнер для кнопок с измененным порядком элементов -->
+                <div class="button-container">
+                    <!-- Ссылка WhatsApp перемещена перед условным оператором аватара -->
+                    <a href="https://wa.me/87786881238" class="btn custom-btn-size" style="background-color: #229808; color: white;" target="_blank">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+
+                    <#if user.email??>
+                        <a href="/profile" class="dropdown">
+                            <#if user.avatar?? && user.avatar.id??>
+                                <img src="/images/${user.avatar.id}" alt="User Avatar"
+                                     width="32" height="32" class="rounded-circle">
+                            <#else>
+                                <img src="/static/images/avatar.png" alt="User Avatar"
+                                     width="32" height="32" class="rounded-circle">
+                            </#if>
+                        </a>
+                    <#else>
+                        <button type="button" class="btn btn-outline-light custom-btn-size" onclick="window.location.href = '/login'">
+                            <i class="bi bi-door-open"></i> Войти
+                        </button>
+                    </#if>
+                </div>
+            </div>
         </div>
-    </nav>
+    </header>
 
     <!-- About Us Modal -->
     <div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
