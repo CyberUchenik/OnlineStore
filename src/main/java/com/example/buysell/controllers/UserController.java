@@ -5,10 +5,7 @@
     import lombok.RequiredArgsConstructor;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
-    import org.springframework.web.bind.annotation.GetMapping;
-    import org.springframework.web.bind.annotation.PathVariable;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestParam;
+    import org.springframework.web.bind.annotation.*;
     import org.springframework.web.multipart.MultipartFile;
 
     import java.io.IOException;
@@ -48,7 +45,18 @@
             }
             return "registration-confirmation";
         }
+        @GetMapping("/edit-profile")
+        public String showEditProfileForm(Principal principal, Model model) {
+            User user = userService.getUserByPrincipal(principal);
+            model.addAttribute("user", user);
+            return "edit-profile";
+        }
 
+        @PostMapping("/update-profile")
+        public String updateProfile(@ModelAttribute User updatedUser, Principal principal) {
+            userService.updateUserProfile(updatedUser, principal);
+            return "redirect:/profile";
+        }
         @GetMapping("/user/{user}")
         public String userInfo(@PathVariable("user") User user, Model model, Principal principal) {
             model.addAttribute("user", user);

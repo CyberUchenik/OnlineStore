@@ -125,7 +125,15 @@ public class UserService {
             userRepository.save(user);
         }
     }
-
+    @Transactional
+    public void updateUserProfile(User updatedUser, Principal principal) {
+        User user = userRepository.findByEmail(principal.getName());
+        if (user != null) {
+            user.setName(updatedUser.getName());
+            user.setPhoneNumber(updatedUser.getPhoneNumber());
+            userRepository.save(user);
+        }
+    }
     public void changeUserRoles(User user, Map<String, String> form) {
         Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         user.getRoles().clear();

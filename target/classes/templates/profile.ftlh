@@ -34,6 +34,7 @@
            href="/my/products">
             Мои товары
         </a>
+        <a href="/edit-profile" class="btn btn-primary">Edit Profile</a>
         <form action="/logout" method="post">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <button type="submit" style="text-align: center; width: 100%" class="btn btn-danger mb-2">
