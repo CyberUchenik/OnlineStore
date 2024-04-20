@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,8 +33,42 @@ public class ProductController {
         model.addAttribute("searchCity", city);
         return "products";
     }
+    @GetMapping("/favorites")
+    public String showFavorites(Principal principal, Model model) {
+
+        if (principal == null) {
+            return "redirect:/login";  // Если пользователь не авторизован, перенаправить на страницу входа
+        }
+        List<Product> favorites = productService.getFavorites(principal);
+        model.addAttribute("favorites", favorites);
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        return "favorites";  // Вернуть имя view, которое отображает избранные товары
+    }
+    @GetMapping("/favorites/add/{productId}")
+    public String addProductToFavorites(@PathVariable Long productId, Principal principal, RedirectAttributes redirectAttributes) {
+        try {
+            productService.addProductToFavorites(productId, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Product added to favorites!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: " + e.getMessage());
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping("/favorites/remove/{productId}")
+    public String removeProductFromFavorites(@PathVariable Long productId, Principal principal, RedirectAttributes redirectAttributes) {
+        try {
+            productService.removeProductFromFavorites(productId, principal);
+            redirectAttributes.addFlashAttribute("successMessage", "Product removed from favorites!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Error: " + e.getMessage());
+        }
+        return "redirect:/";
+    }
+
+
     @GetMapping("/about")
-    public String aboutUs(Model model) {
+    public String aboutUs() {
         return "about_us_modal";
     }
     @GetMapping("/product/edit/{id}")

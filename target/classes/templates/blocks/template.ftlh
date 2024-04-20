@@ -50,14 +50,11 @@
                     <nav class="navbar navbar-expand-lg">
                         <div class="navbar-nav">
                             <a class="nav-link active text-white custom-btn-size" aria-current="page" href="#" data-toggle="modal" data-target="#aboutUsModal">О нас</a>
-                            <#if user.email??> <!-- Проверка, авторизован ли пользователь -->
-                                <a class="nav-link text-white custom-btn-size" href="/favorites">Избранные</a>
-                            <#else>
-                                <a class="nav-link text-white custom-btn-size" href="/login">Избранные</a>
-                            </#if>
+                            <a class="nav-link text-white custom-btn-size" href="/favorites">Избранные</a>
                         </div>
                     </nav>
                 </div>
+                <!-- Измененный контейнер для кнопок с измененным порядком элементов -->
                 <div class="button-container">
                     <!-- Ссылка WhatsApp перемещена перед условным оператором аватара -->
                     <a href="https://wa.me/87786881238" class="btn custom-btn-size" style="background-color: #229808; color: white;" target="_blank">

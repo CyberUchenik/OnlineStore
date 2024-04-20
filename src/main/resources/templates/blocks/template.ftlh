@@ -50,7 +50,7 @@
                     <nav class="navbar navbar-expand-lg">
                         <div class="navbar-nav">
                             <a class="nav-link active text-white custom-btn-size" aria-current="page" href="#" data-toggle="modal" data-target="#aboutUsModal">О нас</a>
-                            <a class="nav-link text-white custom-btn-size" href="#">Избранные</a>
+                            <a class="nav-link text-white custom-btn-size" href="/favorites">Избранные</a>
                         </div>
                     </nav>
                 </div>

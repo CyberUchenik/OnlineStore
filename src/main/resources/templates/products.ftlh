@@ -62,6 +62,11 @@
                         <div class="card-body">
                             <h5 class="card-title">${product.title}</h5>
                             <p class="card-text">${product.price} ₸</p>
+                            <#if user.favoriteProducts?seq_contains(product)>
+                                <a href="/favorites/remove/${product.id}" class="btn btn-warning">Удалить из избранного</a>
+                            <#else>
+                                <a href="/favorites/add/${product.id}" class="btn btn-success">Добавить в избранное</a>
+                            </#if>
                         </div>
                         <div class="card-footer">
                             ${product.city}
