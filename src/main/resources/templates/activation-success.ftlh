@@ -1,10 +1,15 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user!>
+    <div class="title-container">
+        <h2 class="title">Активация прошла успешно!</h2>
+    </div>
+
     <style>
-        .alert {
-            margin-top: 20px; /* добавляет отступ сверху */
+        .title-container {
+            margin-top: 20px; /* Выберите нужное значение отступа */
         }
     </style>
+
     <div class="alert alert-success" role="alert">
         <h4 class="alert-heading">Активация прошла успешно!</h4>
         <p>Ваш аккаунт был успешно активирован. Теперь вы можете войти в систему, используя вашу электронную почту и пароль.</p>

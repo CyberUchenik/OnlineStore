@@ -13,7 +13,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private Long id;
+
     @Column(unique = true, updatable = false)
     private String email;
     private String phoneNumber;
@@ -68,6 +69,14 @@ public class User implements UserDetails {
         products.add(product);
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);
     }
@@ -86,14 +95,6 @@ public class User implements UserDetails {
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getEmail() {
