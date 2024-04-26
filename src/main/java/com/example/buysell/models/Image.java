@@ -8,12 +8,21 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "original_file_name",length = 1000)
+
     private String originalFileName;
+    @Column(name = "size",length = 1000)
+
     private Long size;
+    @Column(name = "content_type",length = 1000)
+
     private String contentType;
+    @Column(name = "preview_image",length = 1000)
+
     private boolean previewImage;
-    @Lob
+    @Column(name = "bytes",columnDefinition = "bitea")  // Удалено
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Product product;

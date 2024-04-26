@@ -1,6 +1,6 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
-    <h2>Установка нового пароля</h2>
+    <h2 style="margin-top: 200px;">Установка нового пароля</h2>
     <form action="/reset-password" method="post">
         <input type="hidden" name="token" value="${token}">
         <div class="form-group">

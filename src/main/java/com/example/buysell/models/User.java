@@ -12,7 +12,8 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", nullable = false)
+    private Integer id;
     @Column(unique = true, updatable = false)
     private String email;
     private String phoneNumber;
@@ -87,11 +88,11 @@ public class User implements UserDetails {
         this.products = products;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

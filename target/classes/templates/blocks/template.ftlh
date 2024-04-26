@@ -24,13 +24,11 @@
             .custom-btn-size {
                 font-size: 1.00rem; /* Увеличение размера шрифта, например, до 1.25rem */
             }
-
             .button-container {
                 display: flex; /* Использование flexbox для выравнивания элементов */
                 align-items: center; /* Центрирование элементов по вертикали */
                 justify-content: flex-end; /* Выравнивание элементов по правому краю */
             }
-
             /* Увеличенный отступ между элементами */
             .button-container > a,
             .button-container > button {
@@ -80,7 +78,6 @@
             </div>
         </div>
     </header>
-
     <!-- About Us Modal -->
     <div class="modal fade" id="aboutUsModal" tabindex="-1" role="dialog" aria-labelledby="aboutUsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -127,11 +124,9 @@
             </div>
         </div>
     </div>
-
     <div class="container mt-4">
         <#nested/>
     </div>
-
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>

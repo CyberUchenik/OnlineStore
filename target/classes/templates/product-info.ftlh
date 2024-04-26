@@ -1,11 +1,23 @@
 <#import "blocks/template.ftlh" as t>
 <@t.template user>
+
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+        <style>
+            #myCarousel {
+                margin-top: 200px; /* Регулируйте значение, чтобы достичь нужного отступа */
+            }
+            .carousel-item img.product {
+                margin-top: 200px; /* Добавляем отступ над картинкой */
+            }
+        </style>
+
         <ol class="carousel-indicators">
             <#list images as image>
                 <li data-target="#myCarousel" data-slide-to="0" class=""></li>
             </#list>
         </ol>
+
         <div class="carousel-inner">
             <#list images as image>
                 <div class="carousel-item <#if image.previewImage>active</#if>">

@@ -9,18 +9,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
+@Data
 public class PasswordResetToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Используйте IDENTITY, если ваша база данных автоматически управляет инкрементом
+    private Long id; // Измените тип данных с Integer на Long
+
 
     @Setter
     private String token;
 
-    @Getter
-    @Setter
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id")
+    @JoinColumn(nullable = false)
     private User user;
 
     public PasswordResetToken() {
