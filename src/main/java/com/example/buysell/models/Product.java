@@ -28,6 +28,7 @@ public class Product {
     private Long previewImageId;
     private LocalDateTime dateOfCreated;
 
+
     @PrePersist
     private void onCreate() { dateOfCreated = LocalDateTime.now(); }
 

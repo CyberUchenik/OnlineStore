@@ -12,6 +12,7 @@
             }
         </style>
 
+
         <ol class="carousel-indicators">
             <#list images as image>
                 <li data-target="#myCarousel" data-slide-to="0" class=""></li>

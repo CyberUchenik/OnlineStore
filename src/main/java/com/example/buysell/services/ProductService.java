@@ -95,8 +95,19 @@ public class ProductService {
         return userRepository.findByEmail(principal.getName());
     }
 
-    public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+    @Transactional
+    public void deleteProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Удаляем продукт из списка избранных каждого пользователя
+        userRepository.findAllByFavoriteProductsContains(product).forEach(user -> {
+            user.getFavoriteProducts().remove(product);
+            userRepository.save(user);
+        });
+
+        // Удаляем продукт из репозитория, что приведет к удалению продукта из базы данных
+        productRepository.delete(product);
     }
 
     public Product getProductById(Long id) {
