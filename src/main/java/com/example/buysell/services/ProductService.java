@@ -33,16 +33,12 @@ public class ProductService {
         } else if (catalog != null && !catalog.isEmpty()) {
             return productRepository.findByCatalog(catalog);
         } else {
-            // Существующая логика фильтрации
         if (city != null && !city.isEmpty()) {
             if (title != null && !title.isEmpty()) {
-                // Если заданы и заголовок, и город
                 return productRepository.findByTitleAndCity(title, city);
             }
-            // Если задан только город
             return productRepository.findByCity(city);
         } else if (title != null && !title.isEmpty()) {
-            // Если задан только заголовок
             return productRepository.findByTitle(title);
         }
         return productRepository.findAll();
@@ -133,11 +129,9 @@ public class ProductService {
             if (!file.isEmpty()) {
                 Image image;
                 if (imageIds != null && i < imageIds.length && imageIds[i] != null) {
-                    // Замена существующего изображения
                     image = imageRepository.findById(imageIds[i]).orElse(new Image());
                     image.setProduct(product);
                 } else {
-                    // Добавление нового изображения
                     image = new Image();
                     image.setProduct(product);
                     product.addImageToProduct(image);
@@ -152,6 +146,4 @@ public class ProductService {
 
         productRepository.save(product);
     }
-
-
 }

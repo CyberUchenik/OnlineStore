@@ -37,12 +37,12 @@ public class ProductController {
     public String showFavorites(Principal principal, Model model) {
 
         if (principal == null) {
-            return "redirect:/login";  // Если пользователь не авторизован, перенаправить на страницу входа
+            return "redirect:/login";
         }
         List<Product> favorites = productService.getFavorites(principal);
         model.addAttribute("favorites", favorites);
         model.addAttribute("user", productService.getUserByPrincipal(principal));
-        return "favorites";  // Вернуть имя view, которое отображает избранные товары
+        return "favorites";
     }
     @GetMapping("/favorites/add/{productId}")
     public String addProductToFavorites(@PathVariable Long productId, Principal principal, RedirectAttributes redirectAttributes) {
